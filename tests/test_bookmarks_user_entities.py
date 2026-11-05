@@ -7,8 +7,8 @@ from twikit.user import User
 
 def user_data(entities):
     legacy = {
-        'created_at': 'Mon Jan 01 00:00:00 +0000 2024', 'name': 'Synthetic',
-        'screen_name': 'synthetic', 'profile_image_url_https': 'https://example.test/a',
+        'created_at': 'Mon Jan 01 00:00:00 +0000 2024',
+        'profile_image_url_https': 'https://example.test/a',
         'location': '', 'description': 'synthetic', 'pinned_tweet_ids_str': [],
         'verified': False, 'possibly_sensitive': False, 'can_dm': False,
         'can_media_tag': False, 'want_retweets': False, 'default_profile': False,
@@ -16,7 +16,7 @@ def user_data(entities):
         'followers_count': 0, 'fast_followers_count': 0, 'normal_followers_count': 0,
         'friends_count': 0, 'favourites_count': 0, 'listed_count': 0,
         'media_count': 0, 'statuses_count': 0, 'is_translator': False,
-        'translator_type': 'none', 'withheld_in_countries': [], 'entities': entities,
+        'translator_type': 'none', 'entities': entities,
     }
     return {'rest_id': 'u1', 'core': {'name': 'Core name', 'screen_name': 'core_name'}, 'legacy': legacy, 'is_blue_verified': False}
 
@@ -41,7 +41,8 @@ class BookmarkUserEntitiesTests(unittest.IsolatedAsyncioTestCase):
         result = await client.get_bookmarks()
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0].user.description_urls, [])
-        self.assertEqual(result[0].user.screen_name, 'synthetic')
+        self.assertEqual(result[0].user.name, 'Core name')
+        self.assertEqual(result[0].user.screen_name, 'core_name')
         self.assertEqual(result.next_cursor, 'next-cursor')
         self.assertEqual(result.previous_cursor, 'previous-cursor')
 
