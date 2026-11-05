@@ -88,7 +88,9 @@ class User:
 
     def __init__(self, client: Client, data: dict) -> None:
         self._client = client
-        legacy = data['legacy']
+        # X may expose profile identity in core instead of legacy.
+        legacy = dict(data.get('core', {}))
+        legacy.update(data.get('legacy', {}))
 
         self.id: str = data['rest_id']
         self.created_at: str = legacy['created_at']
